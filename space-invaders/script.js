@@ -1,3 +1,10 @@
+// ✅ Adapter le canvas à l'écran
+function resizeCanvas() {
+    canvas.width = Math.min(window.innerWidth * 0.9, 500);
+    canvas.height = Math.min(window.innerHeight * 0.8, 600);
+}
+window.addEventListener("resize", resizeCanvas);
+resizeCanvas(); // Exécuter au chargement
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
