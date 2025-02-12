@@ -47,6 +47,25 @@ document.addEventListener("keydown", function (event) {
         bullets.push({ x: playerX + playerWidth / 2, y: canvas.height - 50, speed: 5 });
     }
 });
+// ✅ Sélection des boutons
+const leftBtn = document.getElementById("leftBtn");
+const rightBtn = document.getElementById("rightBtn");
+const shootBtn = document.getElementById("shootBtn");
+
+// ✅ Déplacer à gauche
+leftBtn.addEventListener("touchstart", () => {
+    playerX -= playerSpeed;
+});
+
+// ✅ Déplacer à droite
+rightBtn.addEventListener("touchstart", () => {
+    playerX += playerSpeed;
+});
+
+// ✅ Tirer
+shootBtn.addEventListener("touchstart", () => {
+    bullets.push({ x: playerX + playerWidth / 2, y: canvas.height - 50, speed: 5 });
+});
 
 // 🖌️ Dessiner le joueur
 function drawPlayer() {
