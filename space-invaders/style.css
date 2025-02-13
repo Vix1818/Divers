@@ -12,13 +12,21 @@ h1 {
     margin-top: 20px;
 }
 
-/* ✅ Conteneur principal : Aligne le jeu et le convertisseur */
+/* ✅ Conteneur principal : Jeu à gauche, convertisseur à droite */
 .main-container {
     display: flex;
     justify-content: center;
     align-items: flex-start;
     gap: 50px;
     margin-top: 20px;
+    padding: 20px;
+}
+
+/* ✅ Assurer que le jeu ne prend pas toute la largeur */
+.game-wrapper {
+    flex: 1;
+    display: flex;
+    justify-content: center;
 }
 
 /* ✅ Styles du jeu */
@@ -53,9 +61,13 @@ button {
     cursor: pointer;
 }
 
+button:hover {
+    background-color: #ddd;
+}
+
 /* ✅ Convertisseur BTC/USD/Satoshis */
 .converter-container {
-    width: 250px;
+    width: 280px;
     padding: 15px;
     background-color: white;
     color: black;
@@ -105,15 +117,15 @@ button {
     .main-container {
         flex-direction: column;
         align-items: center;
-        gap: 30px;
     }
 
     .converter-container {
         width: 80%;
         max-width: 300px;
+        margin-top: 20px;
     }
 
-    canvas {
+    .game-wrapper {
         width: 100%;
     }
 }
