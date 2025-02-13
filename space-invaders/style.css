@@ -21,11 +21,12 @@ h1 {
 canvas {
     border: 2px solid white;
     background-color: #111;
-    max-width: 90%;
-    max-height: 60vh; /* ✅ Empêche le jeu de prendre toute la place */
+    width: 90%;
+    max-width: 500px;
+    height: auto;
 }
 
-/* ✅ Styles des boutons tactiles */
+/* ✅ Boutons en bas */
 .controls {
     position: fixed;
     bottom: 10px;
