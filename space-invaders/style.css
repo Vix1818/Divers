@@ -14,25 +14,12 @@ body {
     overflow: hidden;
 }
 
-/* ✅ Conteneur principal */
-.main-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 90%;
-    max-width: 1200px;
-    height: 90vh;
-}
-
 /* ✅ Conteneur du jeu */
 .game-wrapper {
-    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    max-width: 600px;
-    width: 100%;
 }
 
 /* ✅ Canvas (Zone du jeu) */
@@ -66,39 +53,8 @@ button:hover {
     background-color: #ddd;
 }
 
-/* ✅ Convertisseur */
-.converter-container {
-    width: 320px;
-    padding: 15px;
-    background-color: white;
-    color: black;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    position: relative;
-    height: fit-content;
-}
-
 /* ✅ Responsive */
-@media screen and (max-width: 1024px) {
-    .main-container {
-        flex-direction: column;
-        align-items: center;
-        height: auto;
-    }
-
-    .converter-container {
-        width: 90%;
-        max-width: 320px;
-        position: static;
-        margin-top: 20px;
-    }
-
-    .game-wrapper {
-        height: auto;
-        width: 100%;
-    }
-
+@media screen and (max-width: 768px) {
     canvas {
         width: 90%;
         height: auto;
