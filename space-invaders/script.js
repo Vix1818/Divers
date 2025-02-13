@@ -211,4 +211,4 @@ async function updateConversion() {
 document.getElementById("convertBtn").addEventListener("click", updateConversion);
 fetchExchangeRate().then(rate => {
     document.getElementById("exchangeRate").textContent = `Taux BTC/USD : ${rate.toFixed(2)} USD`;
-});0
+});
