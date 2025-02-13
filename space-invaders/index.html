@@ -3,23 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Space Invaders</title>
+    <title>Space Invaders avec Convertisseur Bitcoin</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <h1>Space Invaders</h1>
-    <p>Déplace-toi avec ← → et tire avec Espace ou les boutons ci-dessous</p>
+    <p>Déplacez-vous avec les flèches ← → et tirez avec la barre d'espace ou utilisez les boutons ci-dessous</p>
 
-    <!-- ✅ Conteneur principal : Jeu à gauche et convertisseur à droite -->
+    <!-- Conteneur principal : Jeu à gauche et convertisseur à droite -->
     <div class="main-container">
         
-        <!-- ✅ Jeu Space Invaders -->
+        <!-- Jeu Space Invaders -->
         <div class="game-wrapper">
             <div class="game-container">
                 <canvas id="gameCanvas"></canvas>
 
-                <!-- ✅ Boutons tactiles pour mobile -->
+                <!-- Boutons tactiles pour mobile -->
                 <div class="controls">
                     <button id="leftBtn">⬅️</button>
                     <button id="shootBtn">🔥</button>
@@ -28,17 +28,17 @@
             </div>
         </div>
 
-        <!-- ✅ Convertisseur BTC/USD/Satoshis -->
+        <!-- Convertisseur BTC/USD/Satoshis -->
         <div class="converter-container">
             <h2>Convertisseur BTC ⇄ USD ⇄ Satoshis</h2>
             
-            <label for="btcInput">Bitcoin (BTC):</label>
+            <label for="btcInput">Bitcoin (BTC) :</label>
             <input type="number" id="btcInput" placeholder="0.01">
             
-            <label for="usdInput">Dollars (USD):</label>
+            <label for="usdInput">Dollars (USD) :</label>
             <input type="number" id="usdInput" placeholder="500">
             
-            <label for="satsInput">Satoshis:</label>
+            <label for="satsInput">Satoshis :</label>
             <input type="number" id="satsInput" placeholder="1000000">
             
             <button id="convertBtn">Convertir</button>
