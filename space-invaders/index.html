@@ -11,18 +11,20 @@
     <h1>Space Invaders</h1>
     <p>Déplace-toi avec ← → et tire avec Espace ou les boutons ci-dessous</p>
 
-    <!-- ✅ Conteneur principal (jeu + convertisseur) -->
+    <!-- ✅ Conteneur principal : Jeu à gauche et convertisseur à droite -->
     <div class="main-container">
         
-        <!-- ✅ Conteneur du jeu -->
-        <div class="game-container">
-            <canvas id="gameCanvas"></canvas>
+        <!-- ✅ Jeu Space Invaders -->
+        <div class="game-wrapper">
+            <div class="game-container">
+                <canvas id="gameCanvas"></canvas>
 
-            <!-- ✅ Boutons tactiles pour mobile -->
-            <div class="controls">
-                <button id="leftBtn">⬅️</button>
-                <button id="shootBtn">🔥</button>
-                <button id="rightBtn">➡️</button>
+                <!-- ✅ Boutons tactiles pour mobile -->
+                <div class="controls">
+                    <button id="leftBtn">⬅️</button>
+                    <button id="shootBtn">🔥</button>
+                    <button id="rightBtn">➡️</button>
+                </div>
             </div>
         </div>
 
