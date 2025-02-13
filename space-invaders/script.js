@@ -1,7 +1,7 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-// ✅ Ajustement du canvas pour mobile
+// ✅ Ajustement du canvas pour mobile et desktop
 function resizeCanvas() {
     canvas.width = Math.min(window.innerWidth * 0.9, 500);
     canvas.height = Math.min(window.innerHeight * 0.6, 400);
@@ -176,7 +176,7 @@ function updateGame() {
 }
 updateGame();
 
-// ✅ Convertisseur BTC/USD/Satoshis
+// ✅ Correctif du Convertisseur BTC/USD/Satoshis
 async function fetchExchangeRate() {
     try {
         let response = await fetch("https://api.coindesk.com/v1/bpi/currentprice/USD.json");
@@ -215,10 +215,7 @@ async function updateConversion() {
     }
 }
 
-// ✅ Mettre à jour les conversions au clic
 document.getElementById("convertBtn").addEventListener("click", updateConversion);
-
-// ✅ Charger le taux BTC/USD dès l'ouverture de la page
 fetchExchangeRate().then(rate => {
     if (rate) {
         document.getElementById("exchangeRate").textContent = `Taux BTC/USD : ${rate.toFixed(2)} USD`;
