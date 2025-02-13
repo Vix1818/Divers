@@ -3,52 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Space Invaders + Convertisseur</title>
+    <title>Space Invaders + Convertisseur BTC</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <h1>Space Invaders</h1>
-    <p>Déplace-toi avec ← → et tire avec Espace ou les boutons ci-dessous</p>
+    <h1>Vous êtes bien chez Vix18 ⚡🌑🧡</h1>
+    <p>Ceci est un site de test pour héberger des shitcoins.</p>
+    <p>Accédez à la preuve via ce lien : <a href="#">Liquid Asset Proof</a></p>
 
-    <!-- ✅ Conteneur principal : Jeu à gauche et convertisseur à droite -->
+    <h2>🎮 Jouer à Space Invaders 🎮</h2>
+
     <div class="main-container">
-        
         <!-- ✅ Jeu Space Invaders -->
         <div class="game-wrapper">
-            <div class="game-container">
-                <canvas id="gameCanvas"></canvas>
-
-                <!-- ✅ Boutons tactiles pour mobile -->
-                <div class="controls">
-                    <button id="leftBtn">⬅️</button>
-                    <button id="shootBtn">🔥</button>
-                    <button id="rightBtn">➡️</button>
-                </div>
+            <canvas id="gameCanvas"></canvas>
+            <div class="controls">
+                <button id="leftBtn">⬅️</button>
+                <button id="shootBtn">🔥</button>
+                <button id="rightBtn">➡️</button>
             </div>
         </div>
 
-        <!-- ✅ Convertisseur BTC/USD/Satoshis -->
+        <!-- ✅ Convertisseur BTC -->
         <div class="converter-container">
             <h2>Convertisseur BTC ⇄ USD ⇄ Satoshis</h2>
-            
-            <label for="btcInput">Bitcoin (BTC) :</label>
-            <input type="number" id="btcInput" placeholder="0.01">
-            
-            <label for="usdInput">Dollars (USD) :</label>
-            <input type="number" id="usdInput" placeholder="500">
-            
-            <label for="satsInput">Satoshis :</label>
-            <input type="number" id="satsInput" placeholder="1000000">
-            
+            <label>Bitcoin (BTC) :</label>
+            <input type="number" id="btcInput" placeholder="1">
+            <label>Dollars (USD) :</label>
+            <input type="number" id="usdInput" placeholder="0.00">
+            <label>Satoshis :</label>
+            <input type="number" id="satsInput" placeholder="100000000">
             <button id="convertBtn">Convertir</button>
-            
-            <p id="exchangeRate">Taux BTC/USD : ...</p>
+            <p id="exchangeRate">Taux BTC/USD : Chargement...</p>
         </div>
-
     </div>
 
     <script src="script.js"></script>
-
 </body>
 </html>
