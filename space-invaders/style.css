@@ -14,12 +14,12 @@ body {
     overflow: hidden;
 }
 
-/* ✅ Conteneur principal : Jeu + Convertisseur */
+/* ✅ Conteneur principal */
 .main-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 95%;
+    width: 90%;
     max-width: 1200px;
     height: 90vh;
 }
@@ -35,7 +35,7 @@ body {
     width: 100%;
 }
 
-/* ✅ Ajustement du canvas */
+/* ✅ Canvas (Zone du jeu) */
 canvas {
     border: 2px solid white;
     background-color: #111;
@@ -44,7 +44,7 @@ canvas {
     height: 75vh;
 }
 
-/* ✅ Boutons tactiles pour mobile */
+/* ✅ Boutons tactiles */
 .controls {
     display: flex;
     justify-content: center;
@@ -66,7 +66,7 @@ button:hover {
     background-color: #ddd;
 }
 
-/* ✅ Convertisseur BTC/USD/Satoshis */
+/* ✅ Convertisseur */
 .converter-container {
     width: 320px;
     padding: 15px;
@@ -79,15 +79,7 @@ button:hover {
     height: fit-content;
 }
 
-/* ✅ Ajustement du titre et du texte pour qu’ils restent bien visibles */
-h1, p {
-    position: relative;
-    z-index: 10;
-    background: black;
-    padding: 5px 10px;
-}
-
-/* ✅ Responsive : Ajustement pour mobiles et tablettes */
+/* ✅ Responsive */
 @media screen and (max-width: 1024px) {
     .main-container {
         flex-direction: column;
