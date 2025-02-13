@@ -18,18 +18,20 @@ body {
 .main-container {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     gap: 50px;
     width: 100%;
-    height: 100%;
+    height: 90vh; /* Ajustement pour éviter les débordements */
+    position: relative;
 }
 
-/* ✅ Agrandissement du jeu pour éviter le défilement */
+/* ✅ Conteneur du jeu */
 .game-wrapper {
     flex: 1;
     display: flex;
     justify-content: center;
-    height: 90vh; /* Hauteur ajustée pour remplir l'écran */
+    align-items: center;
+    height: 90vh;
 }
 
 /* ✅ Ajustement du canvas */
@@ -38,7 +40,7 @@ canvas {
     background-color: #111;
     width: 90%;
     max-width: 500px;
-    height: 90vh; /* Remplit mieux l'écran */
+    height: 80vh; /* Ajustement pour éviter le chevauchement */
 }
 
 /* ✅ Boutons tactiles pour mobile */
@@ -71,6 +73,10 @@ button:hover {
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     text-align: center;
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%); /* Centre verticalement */
 }
 
 /* ✅ Responsive : Ajustement pour écrans mobiles */
@@ -78,15 +84,23 @@ button:hover {
     .main-container {
         flex-direction: column;
         align-items: center;
+        height: auto;
     }
 
     .converter-container {
         width: 80%;
         max-width: 300px;
+        position: static;
+        transform: none;
         margin-top: 20px;
     }
 
     .game-wrapper {
-        width: 100%;
+        height: auto;
+    }
+
+    canvas {
+        height: auto;
+        max-height: 400px; /* Ajustement pour ne pas prendre trop de place */
     }
 }
