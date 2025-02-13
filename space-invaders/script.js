@@ -26,7 +26,7 @@ let enemyDirection = 1;
 let score = 0;
 let gameOver = false;
 
-// ✅ Générer les ennemis avec une position correcte
+// ✅ Générer les ennemis
 function createEnemies() {
     enemies = [];
     for (let row = 0; row < enemyRows; row++) {
@@ -74,7 +74,7 @@ function shootBullet() {
     bullets.push({ x: playerX + playerWidth / 2, y: canvas.height - 50, speed: 5 });
 }
 
-// ✅ Mise à jour du mouvement continu
+// ✅ Mouvement fluide du joueur
 function updateMovement() {
     if (moveLeft && playerX > 0) {
         playerX -= playerSpeed;
@@ -102,7 +102,31 @@ function drawBullets() {
     bullets = bullets.filter(bullet => bullet.y > 0);
 }
 
-// ✅ Dessiner et déplacer les ennemis + Gérer les collisions
+// ✅ Vérifier les collisions entre les balles et les ennemis
+function checkCollisions() {
+    for (let i = 0; i < bullets.length; i++) {
+        for (let j = 0; j < enemies.length; j++) {
+            let bullet = bullets[i];
+            let enemy = enemies[j];
+
+            if (
+                enemy.alive &&
+                bullet.x > enemy.x &&
+                bullet.x < enemy.x + enemyWidth &&
+                bullet.y > enemy.y &&
+                bullet.y < enemy.y + enemyHeight
+            ) {
+                enemy.alive = false;
+                bullets.splice(i, 1);
+                score += 10;
+                i--;
+                break;
+            }
+        }
+    }
+}
+
+// ✅ Dessiner et déplacer les ennemis
 function drawEnemies() {
     ctx.fillStyle = "green";
     let shiftDown = false;
@@ -112,23 +136,9 @@ function drawEnemies() {
             ctx.fillRect(enemy.x, enemy.y, enemyWidth, enemyHeight);
             enemy.x += enemySpeed * enemyDirection;
 
-            // Vérifier les bords
             if (enemy.x + enemyWidth >= canvas.width || enemy.x <= 0) {
                 shiftDown = true;
             }
-
-            // ✅ Vérifier les collisions avec les tirs
-            bullets.forEach((bullet, bulletIndex) => {
-                if (
-                    bullet.x > enemy.x &&
-                    bullet.x < enemy.x + enemyWidth &&
-                    bullet.y < enemy.y + enemyHeight
-                ) {
-                    enemy.alive = false; // L'ennemi est touché
-                    bullets.splice(bulletIndex, 1); // Supprimer la balle
-                    score += 10;
-                }
-            });
         }
     }
 
@@ -155,6 +165,7 @@ function updateGame() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawPlayer();
     drawBullets();
+    checkCollisions();
     drawEnemies();
 
     ctx.fillStyle = "white";
