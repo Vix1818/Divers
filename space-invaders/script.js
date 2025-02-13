@@ -1,7 +1,7 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-// ✅ Adapter le canvas à l'écran (iPhone et iPad)
+// ✅ Ajustement du canvas pour mobile
 function resizeCanvas() {
     canvas.width = Math.min(window.innerWidth * 0.9, 500);
     canvas.height = Math.min(window.innerHeight * 0.6, 400);
@@ -9,7 +9,7 @@ function resizeCanvas() {
 window.addEventListener("resize", resizeCanvas);
 resizeCanvas();
 
-// ✅ Variables du jeu
+// ✅ Variables principales
 const playerWidth = 40;
 const playerHeight = 20;
 let playerX = (canvas.width / 2) - (playerWidth / 2);
@@ -26,7 +26,7 @@ let enemyDirection = 1;
 let score = 0;
 let gameOver = false;
 
-// ✅ Générer les ennemis
+// ✅ Générer les ennemis avec une position correcte
 function createEnemies() {
     enemies = [];
     for (let row = 0; row < enemyRows; row++) {
@@ -41,14 +41,14 @@ function createEnemies() {
 }
 createEnemies();
 
-// ✅ Gestion du joueur avec le clavier
+// ✅ Gestion clavier (PC)
 document.addEventListener("keydown", function (event) {
     if (event.key === "ArrowLeft" && playerX > 0) {
         playerX -= playerSpeed;
     } else if (event.key === "ArrowRight" && playerX < canvas.width - playerWidth) {
         playerX += playerSpeed;
     } else if (event.key === " ") {
-        bullets.push({ x: playerX + playerWidth / 2, y: canvas.height - 50, speed: 5 });
+        shootBullet();
     }
 });
 
@@ -57,22 +57,24 @@ const leftBtn = document.getElementById("leftBtn");
 const rightBtn = document.getElementById("rightBtn");
 const shootBtn = document.getElementById("shootBtn");
 
-// ✅ Variables pour les mouvements continus
 let moveLeft = false;
 let moveRight = false;
 
-// ✅ Gestion des boutons tactiles
+// ✅ Boutons pour mobile (iPhone et iPad)
 leftBtn.addEventListener("touchstart", () => moveLeft = true);
 leftBtn.addEventListener("touchend", () => moveLeft = false);
 
 rightBtn.addEventListener("touchstart", () => moveRight = true);
 rightBtn.addEventListener("touchend", () => moveRight = false);
 
-shootBtn.addEventListener("touchstart", () => {
-    bullets.push({ x: playerX + playerWidth / 2, y: canvas.height - 50, speed: 5 });
-});
+shootBtn.addEventListener("touchstart", () => shootBullet());
 
-// ✅ Mouvement fluide du joueur
+// ✅ Fonction pour tirer un projectile
+function shootBullet() {
+    bullets.push({ x: playerX + playerWidth / 2, y: canvas.height - 50, speed: 5 });
+}
+
+// ✅ Mise à jour du mouvement continu
 function updateMovement() {
     if (moveLeft && playerX > 0) {
         playerX -= playerSpeed;
@@ -100,7 +102,7 @@ function drawBullets() {
     bullets = bullets.filter(bullet => bullet.y > 0);
 }
 
-// ✅ Dessiner et déplacer les ennemis
+// ✅ Dessiner et déplacer les ennemis + Gérer les collisions
 function drawEnemies() {
     ctx.fillStyle = "green";
     let shiftDown = false;
@@ -110,9 +112,23 @@ function drawEnemies() {
             ctx.fillRect(enemy.x, enemy.y, enemyWidth, enemyHeight);
             enemy.x += enemySpeed * enemyDirection;
 
+            // Vérifier les bords
             if (enemy.x + enemyWidth >= canvas.width || enemy.x <= 0) {
                 shiftDown = true;
             }
+
+            // ✅ Vérifier les collisions avec les tirs
+            bullets.forEach((bullet, bulletIndex) => {
+                if (
+                    bullet.x > enemy.x &&
+                    bullet.x < enemy.x + enemyWidth &&
+                    bullet.y < enemy.y + enemyHeight
+                ) {
+                    enemy.alive = false; // L'ennemi est touché
+                    bullets.splice(bulletIndex, 1); // Supprimer la balle
+                    score += 10;
+                }
+            });
         }
     }
 
@@ -140,6 +156,11 @@ function updateGame() {
     drawPlayer();
     drawBullets();
     drawEnemies();
+
+    ctx.fillStyle = "white";
+    ctx.font = "20px Arial";
+    ctx.fillText("Score : " + score, 20, 30);
+
     requestAnimationFrame(updateGame);
 }
 updateGame();
