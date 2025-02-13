@@ -12,6 +12,7 @@ const enemySize = 30;
 const enemyRows = 3;
 const enemyCols = 6;
 
+// ✅ Création des ennemis
 function createEnemies() {
     for (let row = 0; row < enemyRows; row++) {
         for (let col = 0; col < enemyCols; col++) {
@@ -21,6 +22,7 @@ function createEnemies() {
 }
 createEnemies();
 
+// ✅ Dessin du jeu
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "white";
@@ -44,8 +46,35 @@ function draw() {
 }
 draw();
 
+// ✅ Gestion du clavier
 document.addEventListener("keydown", (e) => {
     if (e.key === "ArrowLeft" && player.x > 0) player.x -= player.speed;
     if (e.key === "ArrowRight" && player.x < canvas.width - player.width) player.x += player.speed;
     if (e.key === " ") bullets.push({ x: player.x + 22, y: player.y, speed: 5 });
 });
+
+// ✅ Gestion des boutons tactiles
+const leftBtn = document.getElementById("leftBtn");
+const rightBtn = document.getElementById("rightBtn");
+const shootBtn = document.getElementById("shootBtn");
+
+let moveLeft = false;
+let moveRight = false;
+
+leftBtn.addEventListener("touchstart", () => moveLeft = true);
+leftBtn.addEventListener("touchend", () => moveLeft = false);
+rightBtn.addEventListener("touchstart", () => moveRight = true);
+rightBtn.addEventListener("touchend", () => moveRight = false);
+shootBtn.addEventListener("touchstart", () => bullets.push({ x: player.x + 22, y: player.y, speed: 5 }));
+
+// ✅ Mouvement fluide du joueur
+function updateMovement() {
+    if (moveLeft && player.x > 0) {
+        player.x -= player.speed;
+    }
+    if (moveRight && player.x < canvas.width - player.width) {
+        player.x += player.speed;
+    }
+    requestAnimationFrame(updateMovement);
+}
+updateMovement();
