@@ -1,3 +1,4 @@
+// ✅ Sélection du canvas et du contexte 2D
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
@@ -41,7 +42,7 @@ function createEnemies() {
 }
 createEnemies();
 
-// ✅ Gestion clavier (PC)
+// ✅ Gestion du clavier pour PC
 document.addEventListener("keydown", function (event) {
     if (event.key === "ArrowLeft" && playerX > 0) {
         playerX -= playerSpeed;
@@ -176,7 +177,14 @@ function updateGame() {
 }
 updateGame();
 
-// ✅ Correctif du Convertisseur BTC/USD/Satoshis
+// ✅ Convertisseur BTC/USD/Satoshis (Correctif Final)
+const btcInput = document.getElementById("btcInput");
+const usdInput = document.getElementById("usdInput");
+const satsInput = document.getElementById("satsInput");
+const convertBtn = document.getElementById("convertBtn");
+const exchangeRateText = document.getElementById("exchangeRate");
+
+// ✅ Fonction pour récupérer le taux de change BTC/USD
 async function fetchExchangeRate() {
     try {
         let response = await fetch("https://api.coindesk.com/v1/bpi/currentprice/USD.json");
@@ -188,38 +196,39 @@ async function fetchExchangeRate() {
     }
 }
 
-// ✅ Mettre à jour les valeurs en fonction du taux
+// ✅ Fonction de conversion
 async function updateConversion() {
     let exchangeRate = await fetchExchangeRate();
-
     if (!exchangeRate) {
-        document.getElementById("exchangeRate").textContent = "Erreur de récupération du taux.";
+        exchangeRateText.textContent = "Erreur de récupération du taux.";
         return;
     }
+    exchangeRateText.textContent = `Taux BTC/USD : ${exchangeRate.toFixed(2)} USD`;
 
-    document.getElementById("exchangeRate").textContent = `Taux BTC/USD : ${exchangeRate.toFixed(2)} USD`;
+    let btc = parseFloat(btcInput.value) || 0;
+    let usd = parseFloat(usdInput.value) || 0;
+    let sats = parseFloat(satsInput.value) || 0;
 
-    let btcInput = parseFloat(document.getElementById("btcInput").value) || 0;
-    let usdInput = parseFloat(document.getElementById("usdInput").value) || 0;
-    let satsInput = parseFloat(document.getElementById("satsInput").value) || 0;
-
-    if (btcInput > 0) {
-        document.getElementById("usdInput").value = (btcInput * exchangeRate).toFixed(2);
-        document.getElementById("satsInput").value = (btcInput * 100000000).toFixed(0);
-    } else if (usdInput > 0) {
-        document.getElementById("btcInput").value = (usdInput / exchangeRate).toFixed(8);
-        document.getElementById("satsInput").value = ((usdInput / exchangeRate) * 100000000).toFixed(0);
-    } else if (satsInput > 0) {
-        document.getElementById("btcInput").value = (satsInput / 100000000).toFixed(8);
-        document.getElementById("usdInput").value = ((satsInput / 100000000) * exchangeRate).toFixed(2);
+    if (btc > 0) {
+        usdInput.value = (btc * exchangeRate).toFixed(2);
+        satsInput.value = (btc * 100000000).toFixed(0);
+    } else if (usd > 0) {
+        btcInput.value = (usd / exchangeRate).toFixed(8);
+        satsInput.value = ((usd / exchangeRate) * 100000000).toFixed(0);
+    } else if (sats > 0) {
+        btcInput.value = (sats / 100000000).toFixed(8);
+        usdInput.value = ((sats / 100000000) * exchangeRate).toFixed(2);
     }
 }
 
-document.getElementById("convertBtn").addEventListener("click", updateConversion);
+// ✅ Mise à jour au clic sur "Convertir"
+convertBtn.addEventListener("click", updateConversion);
+
+// ✅ Chargement du taux BTC/USD dès l'ouverture
 fetchExchangeRate().then(rate => {
     if (rate) {
-        document.getElementById("exchangeRate").textContent = `Taux BTC/USD : ${rate.toFixed(2)} USD`;
+        exchangeRateText.textContent = `Taux BTC/USD : ${rate.toFixed(2)} USD`;
     } else {
-        document.getElementById("exchangeRate").textContent = "Erreur de récupération du taux.";
+        exchangeRateText.textContent = "Erreur de récupération du taux.";
     }
 });
