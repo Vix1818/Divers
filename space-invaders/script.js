@@ -9,7 +9,7 @@ function resizeCanvas() {
 window.addEventListener("resize", resizeCanvas);
 resizeCanvas();
 
-// ✅ Variables principales
+// ✅ Variables principales du jeu
 const playerWidth = 40;
 const playerHeight = 20;
 let playerX = (canvas.width / 2) - (playerWidth / 2);
@@ -175,3 +175,40 @@ function updateGame() {
     requestAnimationFrame(updateGame);
 }
 updateGame();
+
+// ✅ Convertisseur BTC/USD/Satoshis
+async function fetchExchangeRate() {
+    try {
+        let response = await fetch("https://api.coindesk.com/v1/bpi/currentprice/USD.json");
+        let data = await response.json();
+        return data.bpi.USD.rate_float;
+    } catch (error) {
+        console.error("Erreur lors de la récupération du taux BTC/USD :", error);
+        return 0;
+    }
+}
+
+async function updateConversion() {
+    let exchangeRate = await fetchExchangeRate();
+    document.getElementById("exchangeRate").textContent = `Taux BTC/USD : ${exchangeRate.toFixed(2)} USD`;
+
+    let btcInput = document.getElementById("btcInput").value;
+    let usdInput = document.getElementById("usdInput").value;
+    let satsInput = document.getElementById("satsInput").value;
+
+    if (btcInput !== "") {
+        document.getElementById("usdInput").value = (btcInput * exchangeRate).toFixed(2);
+        document.getElementById("satsInput").value = (btcInput * 100000000).toFixed(0);
+    } else if (usdInput !== "") {
+        document.getElementById("btcInput").value = (usdInput / exchangeRate).toFixed(8);
+        document.getElementById("satsInput").value = ((usdInput / exchangeRate) * 100000000).toFixed(0);
+    } else if (satsInput !== "") {
+        document.getElementById("btcInput").value = (satsInput / 100000000).toFixed(8);
+        document.getElementById("usdInput").value = ((satsInput / 100000000) * exchangeRate).toFixed(2);
+    }
+}
+
+document.getElementById("convertBtn").addEventListener("click", updateConversion);
+fetchExchangeRate().then(rate => {
+    document.getElementById("exchangeRate").textContent = `Taux BTC/USD : ${rate.toFixed(2)} USD`;
+});0
