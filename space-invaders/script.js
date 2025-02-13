@@ -184,31 +184,45 @@ async function fetchExchangeRate() {
         return data.bpi.USD.rate_float;
     } catch (error) {
         console.error("Erreur lors de la récupération du taux BTC/USD :", error);
-        return 0;
+        return null;
     }
 }
 
+// ✅ Mettre à jour les valeurs en fonction du taux
 async function updateConversion() {
     let exchangeRate = await fetchExchangeRate();
+
+    if (!exchangeRate) {
+        document.getElementById("exchangeRate").textContent = "Erreur de récupération du taux.";
+        return;
+    }
+
     document.getElementById("exchangeRate").textContent = `Taux BTC/USD : ${exchangeRate.toFixed(2)} USD`;
 
-    let btcInput = document.getElementById("btcInput").value;
-    let usdInput = document.getElementById("usdInput").value;
-    let satsInput = document.getElementById("satsInput").value;
+    let btcInput = parseFloat(document.getElementById("btcInput").value) || 0;
+    let usdInput = parseFloat(document.getElementById("usdInput").value) || 0;
+    let satsInput = parseFloat(document.getElementById("satsInput").value) || 0;
 
-    if (btcInput !== "") {
+    if (btcInput > 0) {
         document.getElementById("usdInput").value = (btcInput * exchangeRate).toFixed(2);
         document.getElementById("satsInput").value = (btcInput * 100000000).toFixed(0);
-    } else if (usdInput !== "") {
+    } else if (usdInput > 0) {
         document.getElementById("btcInput").value = (usdInput / exchangeRate).toFixed(8);
         document.getElementById("satsInput").value = ((usdInput / exchangeRate) * 100000000).toFixed(0);
-    } else if (satsInput !== "") {
+    } else if (satsInput > 0) {
         document.getElementById("btcInput").value = (satsInput / 100000000).toFixed(8);
         document.getElementById("usdInput").value = ((satsInput / 100000000) * exchangeRate).toFixed(2);
     }
 }
 
+// ✅ Mettre à jour les conversions au clic
 document.getElementById("convertBtn").addEventListener("click", updateConversion);
+
+// ✅ Charger le taux BTC/USD dès l'ouverture de la page
 fetchExchangeRate().then(rate => {
-    document.getElementById("exchangeRate").textContent = `Taux BTC/USD : ${rate.toFixed(2)} USD`;
+    if (rate) {
+        document.getElementById("exchangeRate").textContent = `Taux BTC/USD : ${rate.toFixed(2)} USD`;
+    } else {
+        document.getElementById("exchangeRate").textContent = "Erreur de récupération du taux.";
+    }
 });
