@@ -6,12 +6,11 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
+    height: 100vh;
 }
 
 /* ✅ Conteneur du jeu */
